@@ -31,6 +31,41 @@
 
     <!-- Template Main CSS File -->
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/js/main.js') }}" rel="stylesheet">
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let category = document.getElementById('id_kategori');
+            let selectBuku = document.getElementById('id_buku');
+
+            category.addEventListener('change', async function() {
+                const id_kategori = this.value;
+                selectBuku.innerHTML = "<option value=''>Pilih Buku</option>";
+
+                if (!id_kategori) return;
+
+                try {
+                    const res = await fetch(`/get-buku/${id_kategori}`);
+                    const data = await res.json();
+
+                    if (data.status === 'success') {
+                        data.data.forEach(buku => {
+                            const option = document.createElement('option');
+                            option.value = buku.id;
+                            option.textContent = buku.judul;
+                            selectBuku.appendChild(option);
+                        });
+                    } else {
+                        console.log('error:', data.message);
+                    }
+                } catch (error) {
+                    console.error('error fetch buku', error);
+                }
+            });
+        });
+    </script>
+
+
+
 
     <!-- =======================================================
   * Template Name: NiceAdmin
@@ -85,6 +120,28 @@
 
     <!-- Template Main JS File -->
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script>
+        lat count = 0;
+        document.querySelector('#addRow').adddEventListener('click', function() {
+            const tbody = document.querySelector('#tableTrans tbody');
+
+            count++;
+            const tr = document.createElement('tr');
+            const tdNo = document.createElement('tr');
+            tdNo.textContent = count;
+            tr.appendChild(tdNo);
+
+            const tdNama = document.createElement('td');
+            tdNama.textContent = "Nama Buku";
+            tr.appendChild(tdNama);
+
+            const tdAction = document.createElement('td');
+            tdAction.textContent = `<button>Delete</button>`
+
+            tr.appendChild(tdAction);
+            tbody.appendChild(tr);
+        });
+    </script>
     <script>
         // variable
         // let, var, const
