@@ -19,4 +19,8 @@ class Borrows extends Model
         return $this->hasMany(DetailBorrow::class,'id_borrow','id');
     }
 
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'id_anggota','id');
+    }
 }

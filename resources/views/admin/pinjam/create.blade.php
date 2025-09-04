@@ -56,19 +56,7 @@
                             </div>
                         </div>
                         <div class="col-sm-12 mt-5">
-                            <div align="right" class="mb-3">
-                                <button type="button" id="addRow" class="btn btn-primary">Tambah Row</button>
-                            </div>
-                            <table class="table table-bordered" id="tableTrans">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
+
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -77,7 +65,7 @@
                                 <label for="" class="form-label">Tanggal Pengembalian</label>
                             </div>
                             <div class="col-sm-7">
-                                <input type="text" class="form-control" name="return_date" >
+                                <input type="date" class="form-control" name="return_date" >
                             </div>
                         </div>
                         <div class="mb-3 row">
@@ -89,46 +77,25 @@
                             </div>
                         </div>
                         <div class="mb-3 row">
-                            <div class="col-sm-3">
-                                <label for="" class="form-label">Kategori Buku</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <select name="id_kategori" id="id_kategori" class="form-control">
-                                    <option value="">Pilih Kategori</option>
-                                    @foreach ($categories as $cat)
-                                        <option value="{{ $cat->id }}">{{ $cat->nama_kategori }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="mb-3 row">
-                            <div class="col-sm-3">
-                                <label for="" class="form-label">Buku</label>
-                            </div>
-                            <div class="col-sm-7">
-                                <select name="id_buku" id="id_buku" class="form-control">
-                                    <option value="">Pilih Buku</option>
 
-                                </select>
-                            </div>
                         </div>
                         <div class="col-sm-12 mt-5">
                             <div align="right" class="mb-3">
-                                <button type="button" id="addRow" class="btn btn-primary">Tambah Row</button>
+                                <button type="button" id="addRow" class="btn btn-primary">Tambah Bro</button>
                             </div>
-                            <table class="table table-bordered" id="tableTrans">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Nama</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody></tbody>
-                            </table>
                         </div>
                     </div>
                 </div>
+                <table class="table table-bordered" id="tableTrans">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
                 <button class="mt-3 btn btn-success">Simpan</button>
             </form>
         </div>

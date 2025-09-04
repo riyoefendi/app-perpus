@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use App\Models\Member;
 use App\Models\Borrows;
 use App\Models\Category;
+use Exception;
 use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
@@ -18,7 +19,8 @@ class TransactionController extends Controller
      */
     public function index()
     {
-        return view('admin.pinjam.index');
+        $borrows = Borrows::with('member', 'detailMember')->orderBy('id','desc')->get();
+        return view('admin.pinjam.index', compact('borrows'));
     }
 
     /**
@@ -67,7 +69,9 @@ class TransactionController extends Controller
         return redirect()->to('transcation');
 
         } catch (\Throwable $th){
+            //thorw $th;
             DB::rollBack();
+            //return redirect()->to('transaction);
         }
 
 
@@ -79,7 +83,8 @@ class TransactionController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $borrow = Borrows::with('detailBorrow.book','member')->find($id);
+        return view('admin.pinjam.show', compact('borrow'));
     }
 
     /**
@@ -114,9 +119,17 @@ class TransactionController extends Controller
                 'message' => 'fetch book success',
                 'data' => $books
             ]);
+            DB::commit();
+            return redirect()->tid('print-peminjam', $insertBorrow->id);
         } catch (\Throwable $th) {
             return response()->json(['status' => 'error', 'message' => $th->getMessage()], 500);
         }
 
+    }
+
+    public function print($id_borrow)
+    {
+        $borrow = Borrows::with('member','detailBorrow.book')->find($id_borrow);
+        return view('admin.pinjam.print', compact('borrow'));
     }
 }
