@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\DetailBorrow;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\Member;
 use App\Models\Borrows;
 use App\Models\Category;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -46,7 +48,30 @@ class TransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $insertBorrow = Borrows::create ([
+            'id_anggota' => $request->id_anggota,
+            'trans_number' => $request->trans_number,
+            'return_date' => $request->return_date,
+            'note' => $request->note,
+        ]);
+
+        foreach ($request->id_buku as $key => $value) {
+            DetailBorrow::create([
+                'id_borrow' => $insertBorrow->id,
+                'id_book' => $request->id_book[$key],
+            ]);
+        }
+        DB::commit();
+        return redirect()->to('transcation');
+
+        } catch (\Throwable $th){
+            DB::rollBack();
+        }
+
+
+        return redirect()->to('transaction');
     }
 
     /**

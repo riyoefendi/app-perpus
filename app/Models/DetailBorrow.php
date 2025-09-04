@@ -6,5 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DetailBorrow extends Model
 {
-    //
+    public function borrow()
+    {
+        return $this->belongsTo(Borrows::class,'id_borrow','id');
+    }
+
+    public function book()
+    {
+        return $this->belongsTo(Borrows::class,'id_borrow','id');
+    }
 }
